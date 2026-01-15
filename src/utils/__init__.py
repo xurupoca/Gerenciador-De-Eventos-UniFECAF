@@ -124,6 +124,7 @@ def printar_eventos(evento: object):
     print(f"{'ID:':<25} {evento.idEvento:<45}")
     print(f"{'ID Organizador:':<25} {evento.idOrganizador:<45}")
     print(f"{'Nome:':<25} {evento.nome:<45}")
+    print(f"{'Status:':<25} {evento.status:<45}")
     print(f"{'Descrição:':<25} {evento.descricao:<45}")
     print(f"{'Data:':<25} {str(evento.data):<45}")
     print(f"{'Máximo de inscritos:':<25} {evento.numeroMaxParticipantes:<45}")

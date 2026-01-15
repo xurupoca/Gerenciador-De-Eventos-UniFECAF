@@ -60,6 +60,7 @@ while parar != True:
             print("[2] - Atualizar Eventos")
             print("[3] - Atualizar Status de um Evento")
             print("[4] - Excluir Evento")
+            print("[5] - Visualizar a lista de inscritos em seu evento")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -147,7 +148,38 @@ while parar != True:
                 except:
                     print("Dados inválidos!")
                     sleep(2)
-            
+
+            elif escolha_usuario == '5': # ------------------- lista de inscritos em seus eventos ------------------ #
+                titulo("Seus eventos")
+                for evento in eventos:
+                    if evento.idOrganizador == usuario.idUsuario:
+                        printar_eventos(evento)
+                
+                try:
+                    escolha_usuario = int(input("ID do evento que deseja: "))
+                    for evento in eventos:
+                        if evento.idEvento == escolha_usuario:
+                            if evento.idOrganizador == usuario.idUsuario:
+
+                                titulo("Alunos inscritos")
+                                for aluno in evento.alunosInscritos:
+                                    print(f"{'RA:':<25} {aluno.RA:<45}")
+                                    print(f"{'Nome:':<25} {aluno.nome:<45}")
+                                    print(f"{'Curso:':<25} {aluno.curso:<45}")
+                                    print("_-" * 60)
+                                    print()
+                                
+                                input("Pressione 'Enter' para voltar!")
+                                break
+
+                            else:
+                                print("Esse evento não foi criado por você!")
+                                sleep(2)
+                                break
+                except:
+                    print("Dados inválidos!")
+                    sleep(2)
+                
             else:
                 print("Escolha inválida!")
                 sleep(2)
