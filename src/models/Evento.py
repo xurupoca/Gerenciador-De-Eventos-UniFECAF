@@ -10,7 +10,7 @@ class Evento:
         self.descricao = descricao
         self.alunosInscritos = []
         self.numeroMaxParticipantes = numeroMaxParticipantes
-        self.avaliacoes = {}
+        self.avaliacoes = []
         self.status = "Ativo"
 
 

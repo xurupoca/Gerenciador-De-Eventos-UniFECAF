@@ -210,9 +210,52 @@ def criar_organizador(usuarios: list) -> object:
     return organizador
 
 def verificaUserType(user: object, organizador = True, aluno = False) -> bool:
+    """
+    Verifica o tipo de Usuário (Aluno, Organizador)
+    
+    :param user: referência do usuario
+    :type user: object Organizador ou Aluno
+    :param organizador: True se for Organizador, recebe True por padrão
+    :param aluno: True se for Aluno, recebe False por padrão
+    :return: Verdadeiro se corresponder o objeto
+    :rtype: bool
+    """
     if organizador == True and isinstance(user, Organizador):
         return True
     elif aluno == True and isinstance(user, Aluno):
         return True
     else:
         return False
+
+def inserirAvaliacao(aluno: object, evento: object, nota: float, comentario: str) -> str:
+    """
+    Inserer uma avaliação em um evento
+
+    :param anulo: objeto Aluno que vai avaliar
+    :type aluno: object Aluno
+    :param evento: Objeto Evento que sera avaliado
+    :type evento: object Evento
+    :param nota: Nota de 0.0 a 10.0
+    :type nota: float
+    :param comentario: Comentario do evento
+    :type comentario: str
+    :return: Mensagem do que foi executado ou não
+    :rtype: str
+    """
+    
+    if nota >= 0.0 and nota <= 10.0:
+        if evento.status == "Concluido":
+            esta_inscrito = False
+            for aluno_inscrito in evento.alunosInscritos:
+                if aluno_inscrito.RA == aluno.RA:
+                    esta_inscrito = True
+                    break
+            if esta_inscrito:
+                evento.avaliacoes.append({"RA": aluno.RA, "nota": nota, "comentario": comentario})
+                return "Comentário Enviado!"
+            else:
+                return "Você não está inscrito neste evento!"
+        else:
+            return "Não permitido, Evento ainda não foi concluído!"
+    else:
+        return "Dados inválidos!"
