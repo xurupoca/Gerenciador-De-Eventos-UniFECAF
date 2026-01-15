@@ -1,12 +1,12 @@
-import os
-
 from models import *
+from models.Evento import Evento
 from utils import *
 
 from datetime import date
 from time import sleep
 
 usuarios = []
+eventos = []
 
 usuario = None
 
@@ -53,3 +53,38 @@ while parar != True:
         else:
             print("Digite um número válido!")
             sleep(2)
+    
+    # ----------------------- Sistemas ----------------------- #
+    if usuario != None:
+
+        # ---------------------------------- Sistema do Organizador ---------------------------- #
+        if isinstance(usuario, Organizador):
+            titulo("Organizador")
+
+            print("[1] - Criar Eventos")
+            print("[999] - Sair")
+
+            escolha_usuario = input("Sua escolha: ")
+            
+            if escolha_usuario == "999":
+                parar = True
+            elif escolha_usuario == "1": # ------- Criando Evento ---------- #
+                titulo("Criando Eventos")
+                try:
+                    id_evento = int(input("ID para o evento: "))
+                    nome = input("Nome: ")
+                    print("Data do evento")
+                    dia = int(input("Dia: "))
+                    mes = int(input("Mês: "))
+                    ano = int(input("Ano: "))
+                    data = date(ano, mes, dia)
+                    descricao = input("Descrição: ")
+                    max_participantes = int(input("Número máximo de participantes: "))
+
+                    evento = Evento(id_evento, usuario.idUsuario, nome, data, descricao, max_participantes)
+                    eventos.append(evento)
+                    print("Evento criado com sucesso!")
+                    sleep(2)
+                except ValueError:
+                    print("dados inválidos!!")
+                    sleep(2)
