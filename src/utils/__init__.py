@@ -108,7 +108,7 @@ def pdf_export(data: list, file_name: str) -> True:
     for cell in data:
         texto = ""
         for item in cell:
-            texto + " - " + str(item)
+            texto += " - " + str(item)
         pdf.cell(200, 10, txt=texto, ln=True, align="C")
 
     pdf.output(f"{file_name}.pdf")

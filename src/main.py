@@ -61,6 +61,7 @@ while parar != True:
             print("[3] - Atualizar Status de um Evento")
             print("[4] - Excluir Evento")
             print("[5] - Visualizar a lista de inscritos em seu evento")
+            print("[6] - Exportar lista de inscritos em um evento")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -170,6 +171,30 @@ while parar != True:
                                     print()
                                 
                                 input("Pressione 'Enter' para voltar!")
+                                break
+
+                            else:
+                                print("Esse evento não foi criado por você!")
+                                sleep(2)
+                                break
+                except:
+                    print("Dados inválidos!")
+                    sleep(2)
+            
+            elif escolha_usuario == "6": # --------------- exportar a lista de inscritos --------------------- #
+                titulo("Seus eventos")
+                for evento in eventos:
+                    if evento.idOrganizador == usuario.idUsuario:
+                        printar_eventos(evento)
+                
+                try:
+                    escolha_usuario = int(input("ID do evento que deseja: "))
+                    for evento in eventos:
+                        if evento.idEvento == escolha_usuario:
+                            if evento.idOrganizador == usuario.idUsuario:
+                                evento.exportarListaParticipantes(csv=True, pdf=True, file_name=evento.nome + "_alunos")
+                                print("Lista exportada em PDF e CSV.")
+                                sleep(2)
                                 break
 
                             else:
