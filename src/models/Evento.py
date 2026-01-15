@@ -39,7 +39,7 @@ class Evento:
         
     @property
     def data(self) -> date:
-        return self._date
+        return self._data
     
     @data.setter
     def data(self, data_evento: date):

@@ -179,3 +179,31 @@ def pdf_export(data: list, file_name: str) -> True:
 
     pdf.output(f"{file_name}.pdf")
     return True
+
+def printar_eventos(evento: object):
+    """
+    Printa um evento detalhado
+
+    :param evento: Objeto do tipo Evento
+    :type evento: object
+    """
+    print(f"ID: {evento.idEvento:^60}")
+    print(f"ID Organizador: {evento.idOrganizador:^60}")
+    print(f"Nome: {evento.nome:^60}")
+    print(f"Data: {str(evento.data):^60}")
+    print(f"Máximo de inscritos: {evento.numeroMaxParticipantes:^60}")
+    print(f"Inscritos: {len(evento.alunosInscritos):^60}")
+    print("_-" * 60)
+
+def criar_data()-> date:
+    """
+    Cria uma data com base nas respostas do usuário
+
+    :return: objeto datetime.date com a data escolhida pelo usuário
+    :rtype: date
+    """
+    dia = int(input("Dia: "))
+    mes = int(input("Mês: "))
+    ano = int(input("Ano: "))
+    data = date(ano, mes, dia)
+    return data

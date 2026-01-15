@@ -62,6 +62,8 @@ while parar != True:
             titulo("Organizador")
 
             print("[1] - Criar Eventos")
+            print("[2] - Atualizar Eventos")
+            print("[3] - Atualizar Status de um Evento")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -71,20 +73,40 @@ while parar != True:
             elif escolha_usuario == "1": # ------- Criando Evento ---------- #
                 titulo("Criando Eventos")
                 try:
-                    id_evento = int(input("ID para o evento: "))
                     nome = input("Nome: ")
                     print("Data do evento")
-                    dia = int(input("Dia: "))
-                    mes = int(input("Mês: "))
-                    ano = int(input("Ano: "))
-                    data = date(ano, mes, dia)
+                    data = criar_data()
                     descricao = input("Descrição: ")
                     max_participantes = int(input("Número máximo de participantes: "))
 
-                    evento = Evento(id_evento, usuario.idUsuario, nome, data, descricao, max_participantes)
+                    evento = Evento(len(eventos) + 50000, usuario.idUsuario, nome, data, descricao, max_participantes)
                     eventos.append(evento)
                     print("Evento criado com sucesso!")
                     sleep(2)
                 except ValueError:
                     print("dados inválidos!!")
+                    sleep(2)
+            
+            elif escolha_usuario == "2": # ---------- Atualizando Eventos ---------- #
+                titulo("Atualizando Eventos")
+                try:
+                    for evento in eventos:
+                        printar_eventos(evento)
+
+                    escolha_usuario = input("ID do evento que deseja atualizar: ")
+                    for evento in eventos:
+                        if evento.idEvento == int(escolha_usuario):
+                            printar_eventos(evento)
+                            
+                            print("Data do evento")
+                            data = criar_data()
+                            max_participantes = int(input("Número máximo de participantes: "))
+
+                            evento.data = data
+                            evento.numeroMaxParticipantes = max_participantes
+                            print("Evento atualizado com sucesso!!")
+                            sleep(2)
+                            break
+                except ValueError:
+                    print("Dados inválidos!!")
                     sleep(2)
