@@ -1,4 +1,4 @@
-from utils import titulo, limpar_terminal, confirma_login, printar_eventos, criar_data, criar_aluno, criar_organizador, verificaUserType, inserirAvaliacao
+from utils import titulo, limpar_terminal, confirma_login, printar_eventos, criar_data, criar_aluno, criar_organizador, verificaUserType
 from time import sleep
 
 usuarios = []
@@ -215,7 +215,6 @@ while parar != True:
 
             print("[1] - Inscrever-se em eventos")
             print("[2] - Cancelar inscrição em eventos")
-            print("[3] - Avaliar um evento")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -249,25 +248,6 @@ while parar != True:
                             sleep(2)
                 except:
                     print("Dados inválidos!!")
-                    sleep(2)
-
-            elif escolha_usuario == "3": # ------------------------------- avaliar evento ------------------------- #
-                titulo("Avaliação de Eventos")
-                for evento in eventos:
-                    if evento.status == "Concluido": #Verifica se o evento foi concluído
-                        printar_eventos(evento)
-                try:
-                    escolha_usuario = int(input("ID do Evento que deseja avaliar: "))
-                    for evento in eventos:
-                        if evento.idEvento == escolha_usuario and evento.status == "Concluido":
-                            nota = float(input("Nota de 0.0 a 10.0: "))
-                            comentario = input("Comentário: ")
-                            print(inserirAvaliacao(usuario, evento, nota, comentario))
-                            sleep(2)
-                            break
-
-                except:
-                    print("Dados inválidos!")
                     sleep(2)
             
             else:

@@ -127,7 +127,6 @@ src/
 - [x] CRUD de Eventos
 - [x] Inscrição e cancelamento de inscrição
 - [x] Exportação de lista de inscritos (CSV/PDF)
-- [x] Avaliação de Eventos concluídos
 
 ## Licença
 Este projeto está sob licença (MIT License) - veja o arquivo [LICENSE](LICENSE) para detalhes.
