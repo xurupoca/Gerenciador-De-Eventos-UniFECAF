@@ -35,10 +35,11 @@ Este projeto foi desenvolvido seguindo práticas de **Engenharia de Software**, 
 ### Uso de Diagramas
 
 **Caso de Uso**
+![Diagrama Estudo de caso](src/docs/Diagrama%20de%20caso%20de%20uso.png)
 
 ---
-
 **Diagrama de Classes**
+![Diagrama de Classes](src/docs/Classe%20UML.png)
 
 
 ### Gestão ágil com KanBan
