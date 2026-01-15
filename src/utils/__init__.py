@@ -5,8 +5,8 @@ from time import sleep
 import csv
 from fpdf import FPDF
 
-from models.Organizador import Organizador
 from models.Aluno import Aluno
+from models.Organizador import Organizador
 
 def limpar_terminal():
     sistema = platform.system()
@@ -47,72 +47,6 @@ def coleta_de_dados_usuarios() ->dict:
     dataDeCadastro = date.today()
 
     return {"nome": nome, "senha": senha, "dataDeNascimento": dataDeNascimento, "email": email, "dataDeCadastro": dataDeCadastro}
-
-def criar_organizador(usuarios: list) -> object:
-    """
-        Cria um organizador no sistema
-
-        :param usuarios: lista de usuario cadastrados
-        :type usaurios: list
-        :return: Retorna o organizador criado
-        :rtype: Object
-        """
-    limpar_terminal()
-    confirmado = False
-    while confirmado != True:
-        try:
-            titulo("Criar Conta de Organizador")
-
-            dados = coleta_de_dados_usuarios()
-            id_usuario = len(usuarios) + 1
-
-            #Criando Usuário
-            organizador = Organizador(dados["nome"], dados["dataDeNascimento"], dados["senha"], dados["email"], dados["dataDeCadastro"], id_usuario)
-            usuarios.append(organizador)
-            print("Conta criada com sucesso!")
-            sleep(2)
-            confirmado = True
-        
-        except:
-            print("informações inválidas!")
-            sleep(2)
-    
-    return organizador
-
-
-def criar_aluno(usuarios: list) -> object:
-    """
-    Registra um aluno no sistema
-    
-    :param usuarios: lista dos usuarios existentes
-    :type usuarios: list
-    :return: retorna o aluno criado
-    :rtype: object
-    """
-
-    confirmado = False
-    while confirmado != True:
-        limpar_terminal()
-        try:
-            titulo("Criar Conta de Aluno")
-
-            dados = coleta_de_dados_usuarios()
-            RA = len(usuarios) + 50000000
-            curso = input("Curso: ")
-            ano = input("Ano que ingressou na faculdade: ")
-
-            #Criando Usuário
-            aluno = Aluno(dados["nome"], dados["dataDeNascimento"], dados["senha"], dados["email"], dados["dataDeCadastro"], RA, curso, int(ano))
-            usuarios.append(aluno)
-            print("Conta criada com sucesso!")
-            sleep(2)
-            confirmado = True
-        
-        except:
-            print("informações inválidas!")
-            sleep(2)
-    
-    return aluno
 
 def confirma_login(usuarios: list, email: str, senha: str) -> object:
     """
@@ -208,3 +142,76 @@ def criar_data()-> date:
     ano = int(input("Ano: "))
     data = date(ano, mes, dia)
     return data
+
+def criar_aluno(usuarios: list) -> object:
+    """
+    Registra um aluno no sistema
+    
+    :param usuarios: lista dos usuarios existentes
+    :type usuarios: list
+    :return: retorna o aluno criado
+    :rtype: object
+    """
+
+    confirmado = False
+    while confirmado != True:
+        limpar_terminal()
+        try:
+            titulo("Criar Conta de Aluno")
+
+            dados = coleta_de_dados_usuarios()
+            RA = len(usuarios) + 50000000
+            curso = input("Curso: ")
+            ano = input("Ano que ingressou na faculdade: ")
+
+            #Criando Usuário
+            aluno = Aluno(dados["nome"], dados["dataDeNascimento"], dados["senha"], dados["email"], dados["dataDeCadastro"], RA, curso, int(ano))
+            usuarios.append(aluno)
+            print("Conta criada com sucesso!")
+            sleep(2)
+            confirmado = True
+        
+        except:
+            print("informações inválidas!")
+            sleep(2)
+    
+    return aluno
+
+def criar_organizador(usuarios: list) -> object:
+    """
+        Cria um organizador no sistema
+
+        :param usuarios: lista de usuario cadastrados
+        :type usaurios: list
+        :return: Retorna o organizador criado
+        :rtype: Object
+        """
+    limpar_terminal()
+    confirmado = False
+    while confirmado != True:
+        try:
+            titulo("Criar Conta de Organizador")
+
+            dados = coleta_de_dados_usuarios()
+            id_usuario = len(usuarios) + 1
+
+            #Criando Usuário
+            organizador = Organizador(dados["nome"], dados["dataDeNascimento"], dados["senha"], dados["email"], dados["dataDeCadastro"], id_usuario)
+            usuarios.append(organizador)
+            print("Conta criada com sucesso!")
+            sleep(2)
+            confirmado = True
+        
+        except:
+            print("informações inválidas!")
+            sleep(2)
+    
+    return organizador
+
+def verificaUserType(user: object, organizador = True, aluno = False) -> bool:
+    if organizador == True and isinstance(user, Organizador):
+        return True
+    elif aluno == True and isinstance(user, Aluno):
+        return True
+    else:
+        return False

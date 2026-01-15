@@ -1,8 +1,4 @@
-from models import *
-from models.Evento import Evento
-from utils import *
-
-from datetime import date
+from utils import titulo, limpar_terminal, confirma_login, printar_eventos, criar_data, criar_aluno, criar_organizador, verificaUserType
 from time import sleep
 
 usuarios = []
@@ -57,7 +53,7 @@ while parar != True:
     if usuario != None:
 
         # ---------------------------------- Sistema do Organizador ---------------------------- #
-        if isinstance(usuario, Organizador):
+        if verificaUserType(usuario):
             titulo("Sistema do Organizador")
 
             print("[1] - Criar Eventos")
@@ -73,15 +69,8 @@ while parar != True:
             elif escolha_usuario == "1": # ------- Criando Evento ---------- #
                 titulo("Criando Eventos")
                 try:
-                    nome = input("Nome: ")
-                    print("Data do evento")
-                    data = criar_data()
-                    descricao = input("Descrição: ")
-                    max_participantes = int(input("Número máximo de participantes: "))
-
-                    evento = Evento(len(eventos) + 50000, usuario.idUsuario, nome, data, descricao, max_participantes)
-                    eventos.append(evento)
-                    print("Evento criado com sucesso!")
+                    msg_evento = usuario.criarEvento(eventos)
+                    print(msg_evento)
                     sleep(2)
                 except ValueError:
                     print("dados inválidos!!")
@@ -130,8 +119,7 @@ while parar != True:
                                 print("Status atualizado!!")
                                 sleep(2)
                             elif escolha_usuario == "2":
-                                evento.status = "Cancelado"
-                                print(f"Status atualizado!! {evento.status}")
+                                print(usuario.cancelarEvento(evento))
                                 sleep(2)
                             elif escolha_usuario == "3":
                                 evento.status = "Concluido"
@@ -154,13 +142,8 @@ while parar != True:
                     escolha_usuario = input("ID do evento que deseja excluir: ")
                     for evento in eventos:
                         if evento.idEvento == int(escolha_usuario):
-                            if evento.status == "Cancelado":
-                                eventos.remove(evento)
-                                print("Evento excluido com sucesso!")
-                                sleep(2)
-                            else:
-                                print("Evento não pode ser removido!")
-                                sleep(2)
+                            print(usuario.deletarEvento(eventos, evento))
+                            sleep(2)
                 except:
                     print("Dados inválidos!")
                     sleep(2)
@@ -170,10 +153,11 @@ while parar != True:
                 sleep(2)
         
         # ------------------------------------ Sistema do Aluno ------------------------------------ #
-        elif isinstance(usuario, Aluno):
+        elif verificaUserType(usuario, organizador=False, aluno=True):
             titulo("Sistema do Aluno")
 
             print("[1] - Inscrever-se em eventos")
+            print("[2] - Cancelar inscrição em eventos")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -187,19 +171,22 @@ while parar != True:
                     escolha_usuario = int(input("ID do Evento que deseja inscrever-se: "))
                     for evento in eventos:
                         if evento.idEvento == escolha_usuario and evento.status == "Ativo":
-                            if len(evento.alunosInscritos) > 0:
-                                for inscrito in evento.alunosInscritos:
-                                    if inscrito.RA == usuario.RA: # Verifica se o aluno já não está inscrito
-                                        print("Já está inscrito neste evento!")
-                                        sleep(2)
-                                    else:
-                                        evento.alunosInscritos.append(usuario)
-                                        print("Inscrição realizada!")
-                                        sleep(2)
-                            else:
-                                evento.alunosInscritos.append(usuario)
-                                print("Inscrição realizada!")
-                                sleep(2)
+                            print(usuario.inscreverseNoEvento(evento))
+                            sleep(2)
+                except:
+                    print("Dados inválidos!!")
+                    sleep(2)
+
+            elif escolha_usuario == "2": # ----------------------- Cancelamento de inscrição ---------------------- #
+                for evento in eventos:
+                    if evento.status == "Ativo": #Verifica se o evento está ativo
+                        printar_eventos(evento)
+                try:
+                    escolha_usuario = int(input("ID do Evento que deseja inscrever-se: "))
+                    for evento in eventos:
+                        if evento.idEvento == escolha_usuario and evento.status == "Ativo":
+                            print(usuario.desinscreverseNoEvento(evento))
+                            sleep(2)
                 except:
                     print("Dados inválidos!!")
                     sleep(2)

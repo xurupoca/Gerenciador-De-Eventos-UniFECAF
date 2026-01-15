@@ -1,6 +1,5 @@
 from datetime import date
 
-from utils import titulo, csv_export, pdf_export
 
 class Evento:
     def __init__(self, idEvento: int, idOrganizador: int, nome: str, data: date, descricao: str, numeroMaxParticipantes: int):
@@ -81,7 +80,7 @@ class Evento:
         """
         Lista os participantes do Evento
         """
-
+        from utils import titulo
         titulo(f"Participantes do Evento {self.nome}")
         for aluno in self.alunosInscritos:
             print(aluno.RA)
@@ -110,6 +109,8 @@ class Evento:
             data.append([aluno.RA, aluno.nome])
         
         if csv:
+            from utils import csv_export
             csv_export(data, file_name)
         if pdf:
+            from utils import pdf_export
             pdf_export(data, file_name)
