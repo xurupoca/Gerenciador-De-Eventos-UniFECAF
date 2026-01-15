@@ -64,6 +64,7 @@ while parar != True:
             print("[1] - Criar Eventos")
             print("[2] - Atualizar Eventos")
             print("[3] - Atualizar Status de um Evento")
+            print("[4] - Excluir Evento")
             print("[999] - Sair")
 
             escolha_usuario = input("Sua escolha: ")
@@ -109,4 +110,58 @@ while parar != True:
                             break
                 except ValueError:
                     print("Dados inválidos!!")
+                    sleep(2)
+            
+            elif escolha_usuario == "3": # ------------- Atualizar Status Evento ----------- #
+                titulo("Atualizar Status de Eventos")
+                for evento in eventos:
+                    printar_eventos(evento)
+                try:
+                    escolha_usuario = input("ID do Evento: ")
+                    for evento in eventos:
+                        if evento.idEvento == int(escolha_usuario):
+                    
+                            print("[1] - Ativo")
+                            print("[2] - Cancelado")
+                            print("[3] - Concluído")
+                            escolha_usuario = input("Sua escolha: ")
+
+                            if escolha_usuario == "1":
+                                evento.status = "Ativo"
+                                print("Status atualizado!!")
+                                sleep(2)
+                            elif escolha_usuario == "2":
+                                evento.status = "Cancelado"
+                                print(f"Status atualizado!! {evento.status}")
+                                sleep(2)
+                            elif escolha_usuario == "3":
+                                evento.status = "Concluido"
+                                print("Status atualizado!!")
+                                sleep(2)
+                            else:
+                                print("Escolha inválida!!")
+                                sleep(2)
+                except:
+                    print("Dados inválidos!")
+                    sleep(2)
+
+            elif escolha_usuario == "4": # ------------------ Excluir Evento ------------- #
+                titulo("Excluir Evento")
+                for evento in eventos:
+                    print(evento.status)
+                    if evento.status == "Cancelado":
+                        printar_eventos(evento)
+                try:
+                    escolha_usuario = input("ID do evento que deseja excluir: ")
+                    for evento in eventos:
+                        if evento.idEvento == int(escolha_usuario):
+                            if evento.status == "Cancelado":
+                                eventos.remove(evento)
+                                print("Evento excluido com sucesso!")
+                                sleep(2)
+                            else:
+                                print("Evento não pode ser removido!")
+                                sleep(2)
+                except:
+                    print("Dados inválidos!")
                     sleep(2)
