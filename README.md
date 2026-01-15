@@ -67,7 +67,7 @@ Este projeto foi desenvolvido seguindo práticas de **Engenharia de Software**, 
 
 ### Clonar o repositório
 ```bash
-git clone https://github.com/jonathan-JIPSlok/Gestao-de-Eventos-UniFECAF.git
+git clone https://github.com/xurupoca/Gerenciador-De-Eventos-UniFECAF.git
 ```
 
 ### Pré-Requisitos
