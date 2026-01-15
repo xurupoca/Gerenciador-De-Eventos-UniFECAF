@@ -46,7 +46,6 @@ while parar != True:
             senha = input("Senha: ")
 
             usuario = confirma_login(usuarios, email, senha)
-
         elif escolha_usuario == "3":
             parar = True
         
@@ -59,7 +58,7 @@ while parar != True:
 
         # ---------------------------------- Sistema do Organizador ---------------------------- #
         if isinstance(usuario, Organizador):
-            titulo("Organizador")
+            titulo("Sistema do Organizador")
 
             print("[1] - Criar Eventos")
             print("[2] - Atualizar Eventos")
@@ -70,7 +69,7 @@ while parar != True:
             escolha_usuario = input("Sua escolha: ")
             
             if escolha_usuario == "999":
-                parar = True
+                usuario = None
             elif escolha_usuario == "1": # ------- Criando Evento ---------- #
                 titulo("Criando Eventos")
                 try:
@@ -165,3 +164,46 @@ while parar != True:
                 except:
                     print("Dados inválidos!")
                     sleep(2)
+            
+            else:
+                print("Escolha inválida!")
+                sleep(2)
+        
+        # ------------------------------------ Sistema do Aluno ------------------------------------ #
+        elif isinstance(usuario, Aluno):
+            titulo("Sistema do Aluno")
+
+            print("[1] - Inscrever-se em eventos")
+            print("[999] - Sair")
+
+            escolha_usuario = input("Sua escolha: ")
+            if escolha_usuario == "999":
+                usuario = None
+            elif escolha_usuario == "1": # ------------------------- Inscrição em eventos ------------------ #
+                for evento in eventos:
+                    if evento.status == "Ativo": #Verifica se o evento está ativo
+                        printar_eventos(evento)
+                try:
+                    escolha_usuario = int(input("ID do Evento que deseja inscrever-se: "))
+                    for evento in eventos:
+                        if evento.idEvento == escolha_usuario and evento.status == "Ativo":
+                            if len(evento.alunosInscritos) > 0:
+                                for inscrito in evento.alunosInscritos:
+                                    if inscrito.RA == usuario.RA: # Verifica se o aluno já não está inscrito
+                                        print("Já está inscrito neste evento!")
+                                        sleep(2)
+                                    else:
+                                        evento.alunosInscritos.append(usuario)
+                                        print("Inscrição realizada!")
+                                        sleep(2)
+                            else:
+                                evento.alunosInscritos.append(usuario)
+                                print("Inscrição realizada!")
+                                sleep(2)
+                except:
+                    print("Dados inválidos!!")
+                    sleep(2)
+            
+            else:
+                print("Escolha inválida!")
+                sleep(2)

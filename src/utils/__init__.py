@@ -8,7 +8,15 @@ from fpdf import FPDF
 from models.Organizador import Organizador
 from models.Aluno import Aluno
 
+def limpar_terminal():
+    sistema = platform.system()
+    if sistema == "Windows":
+        os.system("cls")
+    else:  # Linux e macOS
+        os.system("clear")
+
 def titulo(titulo: str):
+    limpar_terminal()
     if isinstance(titulo, str):
         print("_-" * 60)
         print(f"{titulo:^120}")
@@ -17,13 +25,6 @@ def titulo(titulo: str):
 
     else:
         raise ValueError("título deve ser str")
-
-def limpar_terminal():
-    sistema = platform.system()
-    if sistema == "Windows":
-        os.system("cls")
-    else:  # Linux e macOS
-        os.system("clear")
 
 def coleta_de_dados_usuarios() ->dict:
     """
@@ -132,10 +133,9 @@ def confirma_login(usuarios: list, email: str, senha: str) -> object:
             print("Login efetuado com sucesso!")
             sleep(2)
             return item
-        else:
-            print("Dados inválidos!")
-            sleep(2)
-            return None
+    print("Dados inválidos!")
+    sleep(2)
+    return None
 
 
 def csv_export(data: list, file_name: str) -> True:
@@ -187,12 +187,13 @@ def printar_eventos(evento: object):
     :param evento: Objeto do tipo Evento
     :type evento: object
     """
-    print(f"ID: {evento.idEvento:^60}")
-    print(f"ID Organizador: {evento.idOrganizador:^60}")
-    print(f"Nome: {evento.nome:^60}")
-    print(f"Data: {str(evento.data):^60}")
-    print(f"Máximo de inscritos: {evento.numeroMaxParticipantes:^60}")
-    print(f"Inscritos: {len(evento.alunosInscritos):^60}")
+    print(f"{'ID:':<25} {evento.idEvento:<45}")
+    print(f"{'ID Organizador:':<25} {evento.idOrganizador:<45}")
+    print(f"{'Nome:':<25} {evento.nome:<45}")
+    print(f"{'Descrição:':<25} {evento.descricao:<45}")
+    print(f"{'Data:':<25} {str(evento.data):<45}")
+    print(f"{'Máximo de inscritos:':<25} {evento.numeroMaxParticipantes:<45}")
+    print(f"{'Inscritos:':<25} {len(evento.alunosInscritos):<45}")
     print("_-" * 60)
 
 def criar_data()-> date:
