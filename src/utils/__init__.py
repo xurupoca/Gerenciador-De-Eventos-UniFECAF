@@ -2,6 +2,8 @@ import os
 import platform
 from datetime import date
 from time import sleep
+import csv
+from fpdf import FPDF
 
 from models.Organizador import Organizador
 from models.Aluno import Aluno
@@ -134,3 +136,46 @@ def confirma_login(usuarios: list, email: str, senha: str) -> object:
             print("Dados inválidos!")
             sleep(2)
             return None
+
+
+def csv_export(data: list, file_name: str) -> True:
+    """
+    Exporta os dados em CSV
+
+    :param data: Dados em lista para exportação
+    :type data: list
+    :param file_name: Nome do arquivo a ser gerado
+    :type file_name: str
+    :return: True se criado com sucesso
+    :rtype: bool
+    """
+    with open(f"{file_name}.csv", "w", newline="", encoding="utf-8") as arquivo:
+        escritor = csv.writer(arquivo)
+        escritor.writerows(data)
+    return True
+
+def pdf_export(data: list, file_name: str) -> True:
+    """
+    Exporta os dados em PDF
+
+    :param data: Dados em lista para exportação
+    :type data: list
+    :param file_name: Nome do arquivo a ser gerado
+    :type file_name: str
+    :return: True se criado com sucesso
+    :rtype: bool
+    """
+    
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    
+    for cell in data:
+        texto = ""
+        for item in cell:
+            texto + " - " + str(item)
+        pdf.cell(200, 10, txt=texto, ln=True, align="C")
+
+    pdf.output(f"{file_name}.pdf")
+    return True

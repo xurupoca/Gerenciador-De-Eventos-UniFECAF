@@ -13,7 +13,7 @@ class Aluno(Usuario):
 
     @property
     def RA(self) -> int:
-        return self.RA
+        return self._RA
 
     @RA.setter
     def RA(self, ra: int):
